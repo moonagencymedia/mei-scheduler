@@ -38,8 +38,9 @@ async def main():
         print(f"ℹ️ Aucun post prévu pour aujourd'hui")
         return
     for post in posts_today:
-        if post.get("hour_utc") == current_hour:
-            print(f"📤 Envoi du post...")
+        post_hour = post.get("hour_utc")
+        if abs(post_hour - current_hour) <= 1:
+            print(f"📤 Envoi du post prévu à {post_hour}h UTC...")
             await send_post(post)
             return
     print(f"ℹ️ Aucun post à envoyer à {current_hour}h UTC")
